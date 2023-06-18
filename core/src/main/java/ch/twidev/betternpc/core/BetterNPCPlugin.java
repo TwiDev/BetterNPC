@@ -2,11 +2,12 @@ package ch.twidev.betternpc.core;
 
 import ch.twidev.betternpc.api.BetterNPC;
 import ch.twidev.betternpc.api.npc.INPCManager;
+import ch.twidev.betternpc.core.command.TestCommand;
 import ch.twidev.betternpc.core.exception.PluginEnableException;
 import ch.twidev.betternpc.core.nms.NMSManagerFactory;
 import ch.twidev.betternpc.core.nms.NMSVersion;
 import ch.twidev.betternpc.core.npc.NPCManager;
-import ch.twidev.betternpc.nms.common.INMSManager;
+import ch.twidev.betternpc.api.nms.INMSManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -59,6 +60,8 @@ public class BetterNPCPlugin extends JavaPlugin {
                 return npcManager;
             }
         };
+
+        getCommand("test").setExecutor(new TestCommand());
     }
 
     public BetterNPC getAPI() {

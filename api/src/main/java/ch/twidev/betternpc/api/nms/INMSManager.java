@@ -1,4 +1,4 @@
-package ch.twidev.betternpc.nms.common;
+package ch.twidev.betternpc.api.nms;
 
 public interface INMSManager {
 

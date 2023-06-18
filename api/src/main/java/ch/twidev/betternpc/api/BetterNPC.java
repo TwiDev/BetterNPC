@@ -1,7 +1,7 @@
 package ch.twidev.betternpc.api;
 
 import ch.twidev.betternpc.api.npc.INPCManager;
-import ch.twidev.betternpc.nms.common.INMSManager;
+import ch.twidev.betternpc.api.nms.INMSManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class BetterNPC {

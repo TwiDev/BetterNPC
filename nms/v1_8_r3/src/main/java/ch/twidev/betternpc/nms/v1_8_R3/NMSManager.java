@@ -1,7 +1,7 @@
 package ch.twidev.betternpc.nms.v1_8_R3;
 
-import ch.twidev.betternpc.nms.common.AbstractPacketsFactory;
-import ch.twidev.betternpc.nms.common.INMSManager;
+import ch.twidev.betternpc.api.nms.AbstractPacketsFactory;
+import ch.twidev.betternpc.api.nms.INMSManager;
 
 public class NMSManager implements INMSManager {
 

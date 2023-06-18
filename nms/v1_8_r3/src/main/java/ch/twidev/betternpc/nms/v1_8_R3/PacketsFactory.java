@@ -1,7 +1,7 @@
 package ch.twidev.betternpc.nms.v1_8_R3;
 
 import ch.twidev.betternpc.api.npc.NPC;
-import ch.twidev.betternpc.nms.common.AbstractPacketsFactory;
+import ch.twidev.betternpc.api.nms.AbstractPacketsFactory;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.properties.Property;

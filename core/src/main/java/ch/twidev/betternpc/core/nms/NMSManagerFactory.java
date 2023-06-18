@@ -1,6 +1,6 @@
 package ch.twidev.betternpc.core.nms;
 
-import ch.twidev.betternpc.nms.common.INMSManager;
+import ch.twidev.betternpc.api.nms.INMSManager;
 
 @FunctionalInterface
 public interface NMSManagerFactory {

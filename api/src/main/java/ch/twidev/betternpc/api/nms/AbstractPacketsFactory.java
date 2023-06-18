@@ -1,7 +1,6 @@
-package ch.twidev.betternpc.nms.common;
+package ch.twidev.betternpc.api.nms;
 
 import ch.twidev.betternpc.api.npc.NPC;
-import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
