@@ -8,6 +8,7 @@ import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -42,13 +43,16 @@ public class PacketsFactory extends AbstractPacketsFactory {
     }
 
     @Override
-    public void spawnEntity(org.bukkit.entity.Entity entity, Player player) {
+    public void spawnEntity(org.bukkit.entity.Entity entity, Location location, Player player) {
         Entity handle = getHandle(entity);
         PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
 
         if(handle instanceof EntityPlayer) {
             EntityPlayer humanEntity = (EntityPlayer) handle;
             System.out.println("YO 1");
+            humanEntity.setLocation(
+                    location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()
+            );
 
             connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, humanEntity));
             connection.sendPacket(new PacketPlayOutNamedEntitySpawn(humanEntity));
@@ -63,9 +67,9 @@ public class PacketsFactory extends AbstractPacketsFactory {
     }
 
     @Override
-    public boolean addEntityToWorld(org.bukkit.entity.Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
+    public boolean addEntityToWorld(org.bukkit.entity.Entity entity, Location location, CreatureSpawnEvent.SpawnReason spawnReason) {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            spawnEntity(entity, onlinePlayer);
+            spawnEntity(entity, location,onlinePlayer);
         }
         return true;
     }

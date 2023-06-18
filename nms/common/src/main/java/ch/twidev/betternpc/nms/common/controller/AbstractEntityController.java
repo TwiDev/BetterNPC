@@ -32,14 +32,14 @@ public abstract class AbstractEntityController implements EntityController{
 
     @Override
     public boolean spawn(Location at) {
-        return !at.getChunk().isLoaded() ? false : BetterNPC.get().getNMSManager().getPacketsFactory().addEntityToWorld(getBukkitEntity(), CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return !at.getChunk().isLoaded() ? false : BetterNPC.get().getNMSManager().getPacketsFactory().addEntityToWorld(getBukkitEntity(), at, CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
     @Override
     public boolean spawn(Location at, Player player) {
         if(!at.getChunk().isLoaded()) return false;
 
-        BetterNPC.get().getNMSManager().getPacketsFactory().spawnEntity(getBukkitEntity(),player);
+        BetterNPC.get().getNMSManager().getPacketsFactory().spawnEntity(getBukkitEntity(),at,player);
         return true;
     }
 
