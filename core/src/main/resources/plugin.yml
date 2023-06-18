@@ -1,7 +1,7 @@
 name: BetterNPC
 version: 1.0.0
 author: TwiDev
-main: ch.twidev.betternpc.core.BetterNPC
+main: ch.twidev.betternpc.core.BetterNPCPlugin
 
 commands:
   test:
