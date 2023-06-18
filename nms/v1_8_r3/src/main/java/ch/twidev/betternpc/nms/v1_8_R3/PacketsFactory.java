@@ -62,7 +62,9 @@ public class PacketsFactory extends AbstractPacketsFactory {
 
     @Override
     public boolean addEntityToWorld(org.bukkit.entity.Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
-        getHandle(entity).world.addEntity(getHandle(entity), spawnReason);
+        entity.getNearbyEntities(20, 20, 20).stream().filter(e -> e instanceof Player).forEach(p -> {
+            spawnEntity(entity, (Player) p);
+        });
         return true;
     }
 

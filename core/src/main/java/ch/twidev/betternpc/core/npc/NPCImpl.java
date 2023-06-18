@@ -102,6 +102,7 @@ public class NPCImpl implements NPC {
         }
         location = location.clone();
         entityController.create(location.clone(), this);
+        BetterNPCPlugin.log(entityController.getBukkitEntity().toString());
         getBukkitEntity().setMetadata("BetterNPC", new FixedMetadataValue(BetterNPCPlugin.get(), true));
         getBukkitEntity().setMetadata("BetterNPC-UUID", new FixedMetadataValue(BetterNPCPlugin.get(), getUniqueId()));
         if(getBukkitEntity() instanceof SkinnableEntity) {
@@ -128,6 +129,7 @@ public class NPCImpl implements NPC {
     }
 
     public void setEntityController(EntityController newController) {
+        if(newController == null) throw new NullPointerException("Cannot update with a null entity controller");
         boolean wasSpawned = entityController == null ? false : isSpawned();
 
         Location previousLocation = null;
