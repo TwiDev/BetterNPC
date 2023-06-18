@@ -4,12 +4,11 @@ import ch.twidev.betternpc.api.Agent;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
 public interface NPC extends Cloneable, Agent {
-
-    void destroy();
 
     Entity getBukkitEntity();
 
@@ -27,10 +26,17 @@ public interface NPC extends Cloneable, Agent {
 
     void setLocation(Location location);
 
-    void spawn();
+    NPCLiving spawn();
 
-    void spawn(Location location);
+    NPCLiving spawn(Location location);
 
+    NPCLiving spawnToPlayer(Player player);
+
+    NPCLiving spawnToPlayer(Player player, Location location);
+
+    void destroyToPlayer(Player player);
+
+    void destroy();
 
 
 }

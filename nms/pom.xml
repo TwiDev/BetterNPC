@@ -13,6 +13,7 @@
     <name>Better NPC NMS</name>
     <modules>
         <module>common</module>
+        <module>v1_8_r3</module>
     </modules>
     <packaging>pom</packaging>
 

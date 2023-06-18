@@ -9,7 +9,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>ch.twidev.betternpc</groupId>
     <artifactId>betternpc-core</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <name>Better NPC Core</name>
     <packaging>jar</packaging>
 
@@ -20,6 +22,16 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ch.twidev.betternpc</groupId>
+            <artifactId>betternpc-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.twidev.betternpc</groupId>
+            <artifactId>betternpc-nms-v1_8_r3</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>

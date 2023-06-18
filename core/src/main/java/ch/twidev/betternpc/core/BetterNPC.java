@@ -1,5 +1,6 @@
 package ch.twidev.betternpc.core;
 
+import ch.twidev.betternpc.nms.common.INMSManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -10,6 +11,8 @@ public class BetterNPC extends JavaPlugin {
     public static final Logger LOGGER = Logger.getLogger("SpectralDamage");
 
     private static BetterNPC INSTANCE;
+
+    private INMSManager nmsManager;
 
     @Override
     public void onEnable() {
@@ -22,6 +25,12 @@ public class BetterNPC extends JavaPlugin {
         log("#======================================================#");
 
         saveDefaultConfig();
+
+        this.nmsManager = null;
+    }
+
+    public INMSManager getNMSManager() {
+        return nmsManager;
     }
 
     @Override

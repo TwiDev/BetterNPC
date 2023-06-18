@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ch.twidev.betternpc</groupId>
-        <artifactId>betternpc-parent</artifactId>
+        <artifactId>betternpc-nms</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>betternpc-common</artifactId>
+    <artifactId>betternpc-nms-v1_8_r3</artifactId>
+    <name>Better NPC NMS v1_8_R3</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -20,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>ch.twidev.betternpc</groupId>
-            <artifactId>betternpc-api</artifactId>
+            <artifactId>betternpc-nms-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -30,4 +31,5 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 </project>
