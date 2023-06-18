@@ -6,11 +6,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BetterNPC extends JavaPlugin {
+public class BetterNPCPlugin extends JavaPlugin {
 
     public static final Logger LOGGER = Logger.getLogger("SpectralDamage");
 
-    private static BetterNPC INSTANCE;
+    private static BetterNPCPlugin INSTANCE;
 
     private INMSManager nmsManager;
 
@@ -42,7 +42,7 @@ public class BetterNPC extends JavaPlugin {
         this.setEnabled(false);
     }
 
-    public static BetterNPC get() {
+    public static BetterNPCPlugin get() {
         return INSTANCE;
     }
 
