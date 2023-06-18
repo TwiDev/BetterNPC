@@ -3,6 +3,7 @@ package ch.twidev.betternpc.nms.common.controller;
 import ch.twidev.betternpc.api.npc.NPC;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public interface EntityController {

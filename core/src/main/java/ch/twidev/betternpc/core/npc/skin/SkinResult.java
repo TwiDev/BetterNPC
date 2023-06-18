@@ -19,7 +19,7 @@ public class SkinResult {
     }
 
     public void setResult(SkinProperty gameProfile, SkinFetchResultType result) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(BetterNPC.getPlugin(), () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(BetterNPC.get().getPlugin(), () -> {
             SkinResult.this.profile = gameProfile;
             SkinResult.this.result = result;
 

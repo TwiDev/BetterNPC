@@ -55,11 +55,11 @@ public class Skin {
     }
 
     public static void applySkin(SkinnableEntity skinnableEntity, SkinProperty skinProperties, boolean respawn) {
-        BetterNPC.getNMSManager().getPacketsFactory().applySkin(skinnableEntity.getNPC(), skinProperties.getValue(), skinProperties.getSignature(), respawn);
+        BetterNPC.get().getNMSManager().getPacketsFactory().applySkin(skinnableEntity.getNPC(), skinProperties.getValue(), skinProperties.getSignature(), respawn);
     }
 
     private static void fetchRequests(SkinResult skinResult) {
-        final GameProfileRepository repo = BetterNPC.getNMSManager().getPacketsFactory().getGameProfileRepository();
+        final GameProfileRepository repo = BetterNPC.get().getNMSManager().getPacketsFactory().getGameProfileRepository();
 
         repo.findProfilesByNames(new String[]{skinResult.getPlayerName()}, Agent.MINECRAFT, new ProfileLookupCallback() {
             @Override

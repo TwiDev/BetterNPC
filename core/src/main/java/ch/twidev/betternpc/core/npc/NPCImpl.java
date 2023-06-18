@@ -2,17 +2,36 @@ package ch.twidev.betternpc.core.npc;
 
 import ch.twidev.betternpc.api.npc.NPC;
 import ch.twidev.betternpc.api.npc.NPCLiving;
+import ch.twidev.betternpc.core.BetterNPCPlugin;
+import ch.twidev.betternpc.core.npc.skin.SkinnableEntity;
+import ch.twidev.betternpc.nms.common.controller.EntityController;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.UUID;
 
 public class NPCImpl implements NPC {
+
+    private final UUID uuid;
+    private final String name;
+    private EntityController entityController;
+
+    public NPCImpl(UUID uuid, String name, EntityController entityController) {
+        this.uuid = uuid;
+        this.name = name;
+        this.setEntityController(entityController);
+    }
+
     @Override
     public Entity getBukkitEntity() {
-        return null;
+        return entityController == null ? null : entityController.getBukkitEntity();
+    }
+
+    public EntityController getEntityController() {
+        return entityController;
     }
 
     @Override
@@ -22,22 +41,22 @@ public class NPCImpl implements NPC {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public Location getStoredLocation() {
-        return null;
+        return isSpawned() ? getBukkitEntity().getLocation() : null;
     }
 
     @Override
     public UUID getUniqueId() {
-        return null;
+        return uuid;
     }
 
     @Override
     public boolean isSpawned() {
-        return false;
+        return getBukkitEntity() != null;
     }
 
     @Override
@@ -71,13 +90,31 @@ public class NPCImpl implements NPC {
     }
 
     @Override
+    @Deprecated
     public NPCLiving spawnToPlayer(Player player) {
         return null;
     }
 
     @Override
     public NPCLiving spawn(Location location) {
-        return null;
+        if(getBukkitEntity() != null) {
+            //TODO: log entity already spawned
+        }
+        location = location.clone();
+        entityController.create(location.clone(), this);
+        getBukkitEntity().setMetadata("BetterNPC", new FixedMetadataValue(BetterNPCPlugin.get(), true));
+        getBukkitEntity().setMetadata("BetterNPC-UUID", new FixedMetadataValue(BetterNPCPlugin.get(), getUniqueId()));
+        if(getBukkitEntity() instanceof SkinnableEntity) {
+
+        }
+
+        boolean couldSpawn = entityController.spawn(location);
+
+        if(!couldSpawn) {
+            entityController.destroy();
+        }
+
+        return new LivingNPCImpl();
     }
 
     @Override
@@ -89,4 +126,20 @@ public class NPCImpl implements NPC {
     public void setBukkitEntityType(EntityType entityType) {
 
     }
+
+    public void setEntityController(EntityController newController) {
+        boolean wasSpawned = entityController == null ? false : isSpawned();
+
+        Location previousLocation = null;
+        if(wasSpawned)  {
+            previousLocation = getBukkitEntity().getLocation();
+            destroy();
+        }
+
+        entityController = newController;
+        if(wasSpawned) {
+            spawn(previousLocation);
+        }
+    }
+
 }

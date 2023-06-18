@@ -4,14 +4,17 @@ import ch.twidev.betternpc.api.BetterNPC;
 import ch.twidev.betternpc.api.npc.NPC;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public abstract class AbstractEntityController implements EntityController{
 
+
     private Entity bukkitEntity;
 
     public AbstractEntityController() {
+
     }
 
     @Override
@@ -29,14 +32,14 @@ public abstract class AbstractEntityController implements EntityController{
 
     @Override
     public boolean spawn(Location at) {
-        return !at.getChunk().isLoaded() ? false : BetterNPC.getNMSManager().getPacketsFactory().addEntityToWorld(getBukkitEntity(), CreatureSpawnEvent.SpawnReason.CUSTOM);
+        return !at.getChunk().isLoaded() ? false : BetterNPC.get().getNMSManager().getPacketsFactory().addEntityToWorld(getBukkitEntity(), CreatureSpawnEvent.SpawnReason.CUSTOM);
     }
 
     @Override
     public boolean spawn(Location at, Player player) {
         if(!at.getChunk().isLoaded()) return false;
 
-        BetterNPC.getNMSManager().getPacketsFactory().spawnEntity(getBukkitEntity(),player);
+        BetterNPC.get().getNMSManager().getPacketsFactory().spawnEntity(getBukkitEntity(),player);
         return true;
     }
 
@@ -47,4 +50,5 @@ public abstract class AbstractEntityController implements EntityController{
     public Entity getBukkitEntity() {
         return bukkitEntity;
     }
+
 }

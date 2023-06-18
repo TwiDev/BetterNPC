@@ -36,10 +36,10 @@ public class HumanNPC extends AbstractEntityController {
         final EntityPlayer handle = new EntityPlayer(server, nmsWorld, gameProfile, new PlayerInteractManager(nmsWorld));
 
         if(npc.isVisibleByDefault()) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(BetterNPC.getPlugin(), () -> {
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BetterNPC.get().getPlugin(), () -> {
                 if (EntityUtils.isBukkitEntityInvalid(getBukkitEntity())) return;
 
-                BetterNPC.getNMSManager().getPacketsFactory().removeEntityFromPlayerList(getBukkitEntity());
+                BetterNPC.get().getNMSManager().getPacketsFactory().removeEntityFromPlayerList(getBukkitEntity());
             }, 20);
         }
 

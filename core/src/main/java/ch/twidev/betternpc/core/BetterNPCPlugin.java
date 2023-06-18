@@ -1,5 +1,11 @@
 package ch.twidev.betternpc.core;
 
+import ch.twidev.betternpc.api.BetterNPC;
+import ch.twidev.betternpc.api.npc.INPCManager;
+import ch.twidev.betternpc.core.exception.PluginEnableException;
+import ch.twidev.betternpc.core.nms.NMSManagerFactory;
+import ch.twidev.betternpc.core.nms.NMSVersion;
+import ch.twidev.betternpc.core.npc.NPCManager;
 import ch.twidev.betternpc.nms.common.INMSManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -8,11 +14,14 @@ import java.util.logging.Logger;
 
 public class BetterNPCPlugin extends JavaPlugin {
 
-    public static final Logger LOGGER = Logger.getLogger("SpectralDamage");
+    public static final Logger LOGGER = Logger.getLogger("BetterNPC");
 
     private static BetterNPCPlugin INSTANCE;
 
+    private NPCManager npcManager;
     private INMSManager nmsManager;
+
+    private BetterNPC api;
 
     @Override
     public void onEnable() {
@@ -26,10 +35,41 @@ public class BetterNPCPlugin extends JavaPlugin {
 
         saveDefaultConfig();
 
-        this.nmsManager = null;
+        this.npcManager = new NPCManager();
+
+        // Init NMS Version manager
+        try {
+            this.nmsManager = NMSVersion.getCurrentVersion().getManagerFactory().create();
+        } catch (NMSManagerFactory.UnknownVersionException e) {
+            throw new PluginEnableException("BetterNPC only supports Spigot from 1.8 to 1.20.");
+        } catch (NMSManagerFactory.OutdatedVersionException e) {
+            throw new PluginEnableException("BetterNPC doesn't support this version please use " + e.getMinimumSupportedVersion());
+        }
+
+        log("[BetterNPC] is now running in version " + NMSVersion.getCurrentVersion());
+
+        this.api = new BetterNPC(this) {
+            @Override
+            public INMSManager getNMSManager() {
+                return nmsManager;
+            }
+
+            @Override
+            public INPCManager getNPCManager() {
+                return npcManager;
+            }
+        };
     }
 
-    public INMSManager getNMSManager() {
+    public BetterNPC getAPI() {
+        return api;
+    }
+
+    public NPCManager getNpcManager() {
+        return npcManager;
+    }
+
+    public INMSManager getNmsManager() {
         return nmsManager;
     }
 

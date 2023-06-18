@@ -1,8 +1,7 @@
 package ch.twidev.betternpc.nms.v1_8_R3;
 
-import ch.twidev.betternpc.nms.common.INMSManager;
 import ch.twidev.betternpc.nms.common.AbstractPacketsFactory;
-import ch.twidev.betternpc.nms.common.controller.EntityController;
+import ch.twidev.betternpc.nms.common.INMSManager;
 
 public class NMSManager implements INMSManager {
 
@@ -13,12 +12,12 @@ public class NMSManager implements INMSManager {
     }
 
     @Override
-    public EntityController getController() {
-        return null;
+    public AbstractPacketsFactory getPacketsFactory() {
+        return packetsFactory;
     }
 
     @Override
-    public AbstractPacketsFactory getPacketsFactory() {
-        return packetsFactory;
+    public void loadAllNMSEntities() {
+
     }
 }
