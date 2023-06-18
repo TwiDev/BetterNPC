@@ -8,6 +8,7 @@ import ch.twidev.betternpc.core.nms.NMSManagerFactory;
 import ch.twidev.betternpc.core.nms.NMSVersion;
 import ch.twidev.betternpc.core.npc.NPCManager;
 import ch.twidev.betternpc.api.nms.INMSManager;
+import ch.twidev.betternpc.nms.common.controller.EntityController;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -60,6 +61,8 @@ public class BetterNPCPlugin extends JavaPlugin {
                 return npcManager;
             }
         };
+
+        this.nmsManager.loadAllNMSEntities();
 
         getCommand("test").setExecutor(new TestCommand());
     }
