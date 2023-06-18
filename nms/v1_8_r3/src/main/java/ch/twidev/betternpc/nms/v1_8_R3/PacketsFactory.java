@@ -51,6 +51,9 @@ public class PacketsFactory extends AbstractPacketsFactory {
         Packet<?>[] packets = new Packet[0];
         if(handle instanceof EntityPlayer) {
             EntityPlayer humanEntity = (EntityPlayer) handle;
+            humanEntity.setLocation(
+                    location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()
+            );
 
             packets = new Packet[]{
                     new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, humanEntity),
