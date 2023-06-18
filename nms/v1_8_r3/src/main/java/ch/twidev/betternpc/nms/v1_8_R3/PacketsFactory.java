@@ -23,6 +23,7 @@ public class PacketsFactory extends AbstractPacketsFactory {
     public void removeEntityFromPlayerList(org.bukkit.entity.Entity entity, Player... players) {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, (EntityPlayer) ((CraftEntity) entity).getHandle());
         for (Player player : players) {
+            if(!player.isOnline()) continue;
             sendPacket(player, packet);
         }
     }
@@ -63,8 +64,6 @@ public class PacketsFactory extends AbstractPacketsFactory {
             };
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(BetterNPC.get().getPlugin(), () -> {
-                if (EntityUtils.isBukkitEntityInvalid(entity)) return;
-
                 removeEntityFromPlayerList(entity, players);
             }, 20);
         }else if(handle instanceof EntityLiving){
