@@ -1,5 +1,6 @@
 package ch.twidev.betternpc.nms.v1_8_R3;
 
+import ch.twidev.betternpc.api.BetterNPC;
 import ch.twidev.betternpc.api.npc.NPC;
 import ch.twidev.betternpc.api.nms.AbstractPacketsFactory;
 import com.mojang.authlib.GameProfile;
@@ -47,6 +48,7 @@ public class PacketsFactory extends AbstractPacketsFactory {
 
         if(handle instanceof EntityPlayer) {
             EntityPlayer humanEntity = (EntityPlayer) handle;
+            System.out.println("YO 1");
 
             connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, humanEntity));
             connection.sendPacket(new PacketPlayOutNamedEntitySpawn(humanEntity));
@@ -62,9 +64,9 @@ public class PacketsFactory extends AbstractPacketsFactory {
 
     @Override
     public boolean addEntityToWorld(org.bukkit.entity.Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
-        entity.getNearbyEntities(20, 20, 20).stream().filter(e -> e instanceof Player).forEach(p -> {
-            spawnEntity(entity, (Player) p);
-        });
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            spawnEntity(entity, onlinePlayer);
+        }
         return true;
     }
 

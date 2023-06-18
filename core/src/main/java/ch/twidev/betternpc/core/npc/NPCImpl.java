@@ -115,6 +115,8 @@ public class NPCImpl implements NPC {
             entityController.destroy();
         }
 
+        this.setVisibleByDefault(true);
+
         return new LivingNPCImpl();
     }
 
