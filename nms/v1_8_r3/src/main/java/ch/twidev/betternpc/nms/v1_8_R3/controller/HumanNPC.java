@@ -4,6 +4,7 @@ import ch.twidev.betternpc.api.BetterNPC;
 import ch.twidev.betternpc.api.npc.NPC;
 import ch.twidev.betternpc.common.utils.EntityUtils;
 import ch.twidev.betternpc.nms.common.controller.AbstractEntityController;
+import ch.twidev.betternpc.nms.common.controller.EntityControllerType;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -14,10 +15,12 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+@EntityControllerType(entityType = EntityType.PLAYER)
 public class HumanNPC extends AbstractEntityController {
 
     public HumanNPC() {
