@@ -3,6 +3,7 @@ package ch.twidev.betternpc.nms.v1_8_R3;
 import ch.twidev.betternpc.api.BetterNPC;
 import ch.twidev.betternpc.api.npc.NPC;
 import ch.twidev.betternpc.api.nms.AbstractPacketsFactory;
+import ch.twidev.betternpc.common.utils.EntityUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.properties.Property;
@@ -19,9 +20,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 public class PacketsFactory extends AbstractPacketsFactory {
 
     @Override
-    public void removeEntityFromPlayerList(org.bukkit.entity.Entity entity, Player player) {
+    public void removeEntityFromPlayerList(org.bukkit.entity.Entity entity, Player... players) {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, (EntityPlayer) ((CraftEntity) entity).getHandle());
-        sendPacket(player, packet);
+        for (Player player : players) {
+            sendPacket(player, packet);
+        }
     }
 
     @Override
@@ -43,34 +46,45 @@ public class PacketsFactory extends AbstractPacketsFactory {
     }
 
     @Override
-    public void spawnEntity(org.bukkit.entity.Entity entity, Location location, Player player) {
+    public void spawnEntity(org.bukkit.entity.Entity entity, Location location, Player... players) {
         Entity handle = getHandle(entity);
-        PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
-
+        Packet<?>[] packets = new Packet[0];
         if(handle instanceof EntityPlayer) {
             EntityPlayer humanEntity = (EntityPlayer) handle;
-            System.out.println("YO 1");
-            humanEntity.setLocation(
-                    location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()
-            );
 
-            connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, humanEntity));
-            connection.sendPacket(new PacketPlayOutNamedEntitySpawn(humanEntity));
-            connection.sendPacket(new PacketPlayOutEntityHeadRotation(humanEntity, (byte) (humanEntity.yaw * 256 / 360)));
-            connection.sendPacket(new PacketPlayOutEntityMetadata(humanEntity.getId(), humanEntity.getDataWatcher(), true));
+            packets = new Packet[]{
+                    new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, humanEntity),
+                    new PacketPlayOutNamedEntitySpawn(humanEntity),
+                    new PacketPlayOutEntityHeadRotation(humanEntity, (byte) (humanEntity.yaw * 256 / 360)),
+                    new PacketPlayOutEntityMetadata(humanEntity.getId(), humanEntity.getDataWatcher(), true)
+            };
+
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BetterNPC.get().getPlugin(), () -> {
+                if (EntityUtils.isBukkitEntityInvalid(entity)) return;
+
+                removeEntityFromPlayerList(entity, players);
+            }, 20);
         }else if(handle instanceof EntityLiving){
             EntityLiving entityLiving = (EntityLiving) handle;
 
-            connection.sendPacket(new PacketPlayOutSpawnEntityLiving(entityLiving));
-            connection.sendPacket(new PacketPlayOutEntityMetadata(entityLiving.getId(), entityLiving.getDataWatcher(), true));
+            packets = new Packet[]{
+                    new PacketPlayOutSpawnEntityLiving(entityLiving),
+                    new PacketPlayOutEntityMetadata(entityLiving.getId(), entityLiving.getDataWatcher(), true)
+            };
+        }
+
+        for (Player player : players) {
+            PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+
+            for (Packet<?> packet : packets) {
+                connection.sendPacket(packet);
+            }
         }
     }
 
     @Override
     public boolean addEntityToWorld(org.bukkit.entity.Entity entity, Location location, CreatureSpawnEvent.SpawnReason spawnReason) {
-        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            spawnEntity(entity, location,onlinePlayer);
-        }
+        spawnEntity(entity, location, Bukkit.getOnlinePlayers().toArray(new Player[0]));
         return true;
     }
 
