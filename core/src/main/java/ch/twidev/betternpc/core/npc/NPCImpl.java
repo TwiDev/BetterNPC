@@ -51,6 +51,16 @@ public class NPCImpl implements NPC {
     }
 
     @Override
+    public boolean isVisibleByDefault() {
+        return false;
+    }
+
+    @Override
+    public void setVisibleByDefault(boolean visible) {
+
+    }
+
+    @Override
     public void destroyToPlayer(Player player) {
 
     }

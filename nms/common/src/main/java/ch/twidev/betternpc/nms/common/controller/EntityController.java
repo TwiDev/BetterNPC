@@ -13,4 +13,7 @@ public interface EntityController {
 
     Entity getBukkitEntity();
 
+    boolean spawn(Location at);
+    boolean spawn(Location at, Player player);
+
 }

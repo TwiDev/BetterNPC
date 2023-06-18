@@ -6,6 +6,6 @@ public interface INMSManager {
 
     EntityController getController();
 
-    IPacketsFactory getPacketsFactory();
+    AbstractPacketsFactory getPacketsFactory();
 
 }

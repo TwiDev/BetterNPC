@@ -38,5 +38,9 @@ public interface NPC extends Cloneable, Agent {
 
     void destroy();
 
+    boolean isVisibleByDefault();
+
+    void setVisibleByDefault(boolean visible);
+
 
 }
